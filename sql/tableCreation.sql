@@ -1,17 +1,18 @@
-CREATE TABEL Sex(
+CREATE TABLE Sex(
 	sex VARCHAR(6) PRIMARY KEY
 );
 
-CREATE TABEL Club(
+CREATE TABLE Club(
 	id INT AUTO_INCREMENT,
-	name CARCHAR(50),
-	PRIMARY KEY id
+	name VARCHAR(50) NOT NULL, 
+	PRIMARY KEY (id)
 );
 
-CREATE TABEL Player(
+CREATE TABLE Player(
 	golfID CHAR(9),
-	firstName VARCHAR(50),
-	lastName VARCHAR(50),
+	firstName VARCHAR(50) NOT NULL,
+	lastName VARCHAR(50) NOT NULL,
+	mail VARCHAR(100) NOT NULL,
 	sex VARCHAR(6),
 	clubID INT,
 	PRIMARY KEY (golfID),
@@ -19,16 +20,15 @@ CREATE TABEL Player(
 	FOREIGN KEY (clubID) REFERENCES Club(id)
 );
 
-CREATE TABEL Course(
+CREATE TABLE Course(
 	id INT AUTO_INCREMENT,
-	name VARCHAR(50);
-	par INT,
+	name VARCHAR(50),
 	clubID INT,
 	PRIMARY KEY(id, clubID),
 	FOREIGN KEY (clubID) REFERENCES Club(id)
 );
 
-CREATE TABEL Tee(
+CREATE TABLE Tee(
 	name VARCHAR(20),
 	courseID INT,
 	clubID INT, 
@@ -37,11 +37,13 @@ CREATE TABEL Tee(
 	FOREIGN KEY (clubID) REFERENCES Club(id)
 );
 
-CREATE TABEL TeeRating(
+CREATE TABLE TeeRating(
 	teeName VARCHAR(20),
 	courseID INT,
 	clubID INT,
 	sex VARCHAR(6), 
+	cr DOUBLE NOT NULL,
+	slope INT NOT NULL,
 	PRIMARY KEY (teeName, courseID, clubID, sex),
 	FOREIGN KEY (teeName) REFERENCES Tee(name),
 	FOREIGN KEY (courseID) REFERENCES Course(id),
@@ -49,7 +51,7 @@ CREATE TABEL TeeRating(
 	FOREIGN KEY (sex) REFERENCES Sex(sex)
 );
 
-CREATE TABEL Round (
+CREATE TABLE Round (
 	dateAndTime DATETIME,
 	hcp DOUBLE,
 	player VARCHAR(9),
@@ -62,5 +64,31 @@ CREATE TABEL Round (
 	FOREIGN KEY(marquer) REFERENCES Player(golfID)
 	FOREIGN KEY (teeName) REFERENCES Tee(name),
 	FOREIGN KEY (courseID) REFERENCES Course(id),
+	FOREIGN KEY (clubID) REFERENCES Club(id)
+);
+
+CREATE TABLE Hole(
+	number INT,
+	clubID INT,
+	courseID INT,
+	par INT NOT NULL,
+	hcp INT,
+	PRIMARY KEY (number, courseID, clubID),
+	FOREIGN KEY (courseID) REFERENCES Course(id),
 	FOREIGN KEY (clubID) REFERENCES Club(id),
+	CONSTRAINT 18holes CHECK ((number>0) AND (number<19) AND (hcp>0) AND (hcp<19))
+);
+
+CREATE TABLE Score(
+	number INT,
+	clubID INT,
+	courseID INT,
+	roundStart DATETIME,
+	player CHAR(9),
+	score INT,
+	PRIMARY KEY (number, courseID, clubID, roundStart, player),
+	FOREIGN KEY (courseID) REFERENCES Course(id),
+	FOREIGN KEY (clubID) REFERENCES Club(id),
+	FOREIGN KEY (roundStart) REFERENCES Round(dateAndTime),
+	FOREIGN KEY (player) REFERENCES Player(golfID)
 );
