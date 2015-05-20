@@ -92,3 +92,16 @@ CREATE TABLE Score(
 	FOREIGN KEY (roundStart) REFERENCES Round(dateAndTime),
 	FOREIGN KEY (player) REFERENCES Player(golfID)
 );
+
+CREATE TABLE Distance(
+	hole INT,
+	tee VARCHAR(20),
+	courseID INT,
+	clubID INT,
+	meters INT NOT NULL,
+	PRIMARY KEY (hole, tee, courseID, clubID),
+	FOREIGN KEY (courseID) REFERENCES Course(id),
+	FOREIGN KEY (clubID) REFERENCES Club(id),
+	FOREIGN KEY (hole) REFERENCES Hole(number),
+	FOREIGN KEY	(tee) REFERENCES Tee(name)
+);
