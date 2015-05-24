@@ -36,8 +36,7 @@ CREATE TABLE Tee(
 	courseID INT,
 	clubID INT, 
 	PRIMARY KEY (name, courseID, clubID),
-	FOREIGN KEY (courseID) REFERENCES Course(id),
-	FOREIGN KEY (clubID) REFERENCES Club(id)
+	FOREIGN KEY (courseID, clubID) REFERENCES Course(id, clubID)
 );
 
 CREATE TABLE TeeRating(
@@ -48,9 +47,7 @@ CREATE TABLE TeeRating(
 	cr DOUBLE NOT NULL,
 	slope INT NOT NULL,
 	PRIMARY KEY (teeName, courseID, clubID, sex),
-	FOREIGN KEY (teeName) REFERENCES Tee(name),
-	FOREIGN KEY (courseID) REFERENCES Course(id),
-	FOREIGN KEY (clubID) REFERENCES Club(id),
+	FOREIGN KEY (teeName, courseID, clubID) REFERENCES Tee(name, courseID, clubID),
 	FOREIGN KEY (sex) REFERENCES Sex(sex)
 );
 
@@ -65,9 +62,8 @@ CREATE TABLE Round (
 	PRIMARY KEY(dateAndTime, player),
 	FOREIGN KEY(player) REFERENCES Player(golfID),
 	FOREIGN KEY(marquer) REFERENCES Player(golfID),
-	FOREIGN KEY (teeName) REFERENCES Tee(name),
-	FOREIGN KEY (courseID) REFERENCES Course(id),
-	FOREIGN KEY (clubID) REFERENCES Club(id)
+	FOREIGN KEY (teeName, courseID, clubID) REFERENCES Tee(name, courseID, clubID),
+	FOREIGN KEY (courseID, clubID) REFERENCES Course(id, clubID)
 );
 
 CREATE TABLE Hole(
@@ -77,8 +73,7 @@ CREATE TABLE Hole(
 	par INT NOT NULL,
 	hcp INT,
 	PRIMARY KEY (number, courseID, clubID),
-	FOREIGN KEY (courseID) REFERENCES Course(id),
-	FOREIGN KEY (clubID) REFERENCES Club(id),
+	FOREIGN KEY (courseID, clubID) REFERENCES Course(id, clubID),
 	CONSTRAINT 18holes CHECK ((number>0) AND (number<19) AND (hcp>0) AND (hcp<19))
 );
 
@@ -90,10 +85,8 @@ CREATE TABLE Score(
 	player CHAR(9),
 	score INT,
 	PRIMARY KEY (number, courseID, clubID, roundStart, player),
-	FOREIGN KEY (courseID) REFERENCES Course(id),
-	FOREIGN KEY (clubID) REFERENCES Club(id),
-	FOREIGN KEY (roundStart) REFERENCES Round(dateAndTime),
-	FOREIGN KEY (player) REFERENCES Player(golfID)
+	FOREIGN KEY (number, courseID, clubID) REFERENCES Hole(number, courseID, clubID),
+	FOREIGN KEY (roundStart, player) REFERENCES Round(dateAndTime, player)
 );
 
 CREATE TABLE Distance(
@@ -103,8 +96,6 @@ CREATE TABLE Distance(
 	clubID INT,
 	meters INT NOT NULL,
 	PRIMARY KEY (hole, tee, courseID, clubID),
-	FOREIGN KEY (courseID) REFERENCES Course(id),
-	FOREIGN KEY (clubID) REFERENCES Club(id),
-	FOREIGN KEY (hole) REFERENCES Hole(number),
-	FOREIGN KEY	(tee) REFERENCES Tee(name)
+	FOREIGN KEY (tee, courseID, clubID) REFERENCES Tee(name, courseID, clubID),
+	FOREIGN KEY (hole, courseID, clubID) REFERENCES Hole(number, courseID, clubID)
 );
