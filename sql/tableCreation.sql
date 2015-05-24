@@ -2,6 +2,9 @@ CREATE TABLE Sex(
 	sex VARCHAR(6) PRIMARY KEY
 );
 
+INSERT INTO sex VALUES('male');
+INSERT INTO sex VALUES('female');
+
 CREATE TABLE Club(
 	id INT AUTO_INCREMENT,
 	name VARCHAR(50) NOT NULL, 
@@ -60,8 +63,8 @@ CREATE TABLE Round (
 	clubID INT,
 	teeName VARCHAR(20),
 	PRIMARY KEY(dateAndTime, player),
-	FOREIGN KEY(player) REFERENCES Player(golfID)
-	FOREIGN KEY(marquer) REFERENCES Player(golfID)
+	FOREIGN KEY(player) REFERENCES Player(golfID),
+	FOREIGN KEY(marquer) REFERENCES Player(golfID),
 	FOREIGN KEY (teeName) REFERENCES Tee(name),
 	FOREIGN KEY (courseID) REFERENCES Course(id),
 	FOREIGN KEY (clubID) REFERENCES Club(id)

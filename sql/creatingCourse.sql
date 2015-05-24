@@ -1,7 +1,7 @@
-Creating a Course
+/*Creating a Course*/
 
 /*Creating the club*/
-INSERT INTO Club VALUES ('Chalmers GK');
+INSERT INTO Club VALUES (NULL,'Chalmers GK');
 
 /*Creating the course*/
 INSERT INTO Course VALUES(NULL, '18-hålsbanan', (SELECT id FROM Club WHERE name = 'Chalmers GK'));
@@ -40,7 +40,7 @@ INSERT INTO TeeRating VALUES ('Orange', (SELECT Course.id FROM Course, Club WHER
 INSERT INTO TeeRating VALUES ('Orange', (SELECT Course.id FROM Course, Club WHERE Course.name = '18-hålsbanan' AND Club.name = 'Chalmers GK'), 
 	(SELECT id FROM Club WHERE name = 'Chalmers GK'), 'female',67,113);
 
-/*Setting hole lengths*/
+/*Setting hole hcp*/
 INSERT INTO Hole VALUES (1, (SELECT id FROM Club WHERE name = 'Chalmers GK'),
 	(SELECT Course.id FROM Course, Club WHERE Course.name = '18-hålsbanan' AND Club.name = 'Chalmers GK'), 4, 6);
 INSERT INTO Hole VALUES (2, (SELECT id FROM Club WHERE name = 'Chalmers GK'),
