@@ -23,25 +23,18 @@ public class DBconnector {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Cannot connect the database!", e);
-        } finally {
-            System.out.println("Closing the connection.");
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ignore) {
-
-                }
-            }
         }
     }
 
-    public void createClub(String name) throws SQLException {
-        Statement test = connection.createStatement();
-        test.executeQuery("INSERT INTO Club VALUES(null, " + name + ");");
-    }
-
     public int getClubID(String clubName) throws SQLException {
-        return connection.createStatement().executeQuery("SELECT id FROM Club WHERE name = "+ clubName+");").getInt(0);
+        ResultSet temp = connection.createStatement().executeQuery("SELECT id FROM Veckodax.Club WHERE name = '" + clubName + "';");
+        if(temp.next()){
+            System.out.println(temp.toString());
+            System.out.println(temp.getInt("id"));
+            return temp.getInt("id");
+
+        }
+        return 0;
     }
 
 

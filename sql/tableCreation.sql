@@ -99,3 +99,16 @@ CREATE TABLE Distance(
 	FOREIGN KEY (tee, courseID, clubID) REFERENCES Tee(name, courseID, clubID),
 	FOREIGN KEY (hole, courseID, clubID) REFERENCES Hole(number, courseID, clubID)
 );
+
+
+CREATE VIEW AllRounds AS SELECT roundStart,  firstname, lastname, round.hcp, round.teeName, 
+	- round(-round.hcp*(teerating.slope/113)+(teerating.cr-sum(hole.par)),0) AS SHCP,
+    sum(score) AS Brutto, sum(score)-round(-round.hcp*(teerating.slope/113)+(teerating.cr-sum(hole.par)),0) AS Netto
+FROM Score, teerating, round, player, Hole
+WHERE Score.roundStart = round.dateAndTime AND
+	round.teeName = teerating.teeName AND
+    player.sex = teerating.sex AND
+    player.golfid = round.player AND
+    player.golfid = Score.player AND
+    Score.number = hole.number
+GROUP BY concat(player.golfID, round.dateAndTime)
