@@ -11,7 +11,7 @@ public class Server {
         db= new DBconnector(dbURL, dbUserName, dbPassword);
 
         get("/hello", (request, response) -> "Hello world");
-        get("/allRounds", (request, response)-> db.getClubID("Chalmers GK"));
+        get("/allRounds", (request, response)-> db.getPersonalBest());
 
 
 
