@@ -1,0 +1,14 @@
+REST JSON
+
+Creating a new round:
+
+{"scores":
+	[4,4,4,4,5,3,5,5,5,3,3,3,4,4,4,5,5,5],
+"golfID":"930311-006",
+"marquereGolfID":"950501-002",
+"teeName":"Vit",
+"date":"2015-05-27", 
+"time":"12:00", 
+"clubID":1, 
+"courseID":1, 
+"hcp":-4.3}

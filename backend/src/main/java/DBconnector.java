@@ -1,4 +1,5 @@
 import dbEntities.PersonalBest;
+import dbEntities.Round;
 import org.joda.time.DateTime;
 
 import java.sql.*;
@@ -71,4 +72,28 @@ public class DBconnector {
         return results;
     }
 
+    public boolean createNewRound(Round round) {
+        int courseID = round.getCourseID();
+        int clubID = round.getClubID();
+
+        //TODO Make into stringbuilder
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append("INSERT INTO Veckodax.Round VALUES('" +  round.getDate()+ " " + round.getTime() +  "', " + round.getHcp()+
+                ", '"+ round.getGolfID() + "', '" + round.getMarquereGolfID() +"', "+ courseID + ", "+ clubID + ", '"+ round.getTeeName() + "');\n");
+        queryBuilder.append( "INSERT INTO Veckodax.Score VALUES");
+
+        for(int i = 1; i < 19; i++){
+            queryBuilder.append("("+i+", "+ courseID + ", " +clubID + ", '" +  round.getDate()+ " " + round.getTime() +  "', '" +
+                    round.getGolfID() + "', "+ round.getScores()[i-1]+ ")");
+
+            if(i==18){
+                queryBuilder.append(";\n");
+            } else {
+                queryBuilder.append(", ");
+            }
+        }
+
+        System.out.println(queryBuilder.toString());
+        return false;
+    }
 }

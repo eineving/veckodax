@@ -1,6 +1,7 @@
 
 
 import com.google.gson.Gson;
+import dbEntities.Round;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
@@ -26,6 +27,13 @@ public class Server {
             start.plus(Duration.standardDays(7));
 
             return gson.toJson(db.getPersonalBest(start.plus(Duration.standardDays((week - 1) * 7)),start.plus(Duration.standardDays((week)*7))));
+        });
+
+        post("/newRound/", (request, response)->{
+            System.out.println(request.body());
+            Round round = gson.fromJson(request.body(), Round.class);
+            db.createNewRound(round);
+            return response;
         });
 
 
