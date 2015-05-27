@@ -64,7 +64,6 @@ public class DBconnector {
             while(response.next()){
                 results.add(new PersonalBest(response.getString("firstname"), response.getString("lastname"), response.getString("golfID"),
                         response.getInt("PlayedRounds"), response.getInt("Netto")));
-                System.out.println("Added stuff!");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,13 +71,4 @@ public class DBconnector {
         return results;
     }
 
-    /**
-     * Generate the string that should be in the WHERE state in a SQL query to check if row is in the specified intervall
-     * @param start beginning of interval
-     * @param end end if interval
-     * @return
-     */
-    private String generateSQLTimeCondition(DateTime start, DateTime end){
-        return "rundStart >= '" + start.year() +"-";
-    }
 }
