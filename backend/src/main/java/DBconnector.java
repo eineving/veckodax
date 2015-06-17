@@ -79,7 +79,7 @@ public class DBconnector {
         //TODO Make into stringbuilder
         StringBuilder queryBuilder = new StringBuilder();
         queryBuilder.append("INSERT INTO Veckodax.Round VALUES('" +  round.getDate()+ " " + round.getTime() +  "', " + round.getHcp()+
-                ", '"+ round.getGolfID() + "', '" + round.getMarquereGolfID() +"', "+ courseID + ", "+ clubID + ", '"+ round.getTeeName() + "');\n");
+                ", '"+ round.getGolfID() + "', '" + round.getMarkerGolfID() +"', "+ courseID + ", "+ clubID + ", '"+ round.getTeeName() + "');\n");
         queryBuilder.append( "INSERT INTO Veckodax.Score VALUES");
 
         for(int i = 1; i < 19; i++){
