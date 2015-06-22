@@ -3,6 +3,7 @@
 	<head>
 		<TITLE>Veckodax Admin</TITLE>
 		<link href="newRound.css" rel="stylesheet"/>
+		<script src="newRoundScripts.js"></script>
 
 	</head>
 
@@ -15,28 +16,50 @@
 				<div class="info">
 					<p>
 						Player GolfID<br>
-						<input type="text" name="golfID" value="" placeholder="yymmdd-xxx">
+						<input type="text" name="golfID" value="" placeholder="yymmdd-xxx" required>
 					</p>
 
 					<p>
 						Marker GolfID<br>
-						<input type="text" name="markerGolfId" value="" placeholder="yymmdd-xxx">
+						<input type="text" name="markerGolfId" value="" placeholder="yymmdd-xxx" required>
 					</p>
 
 					<p>
 						Date<br>
-						<input type="text" name="date" placeholder="yyyy-mm-dd">
+						<input type="text" name="date" placeholder="yyyy-mm-dd" required>
 					</p>
 					<p>
 						Time<br>
-						<input type="text" name="time" placeholder="hh:mm">
+						<input type="text" name="time" placeholder="hh:mm" required>
 					</p>
-					
-				
+					<p>
+						Tee<br>
+						<input type="text" name="tee" placeholder="E.g. Vit" required>
+					</p>		
 				</div>
 
 				<div class="score">
-
+					<p>
+						Score<br>
+						<input type="number" name="score1" placeholder="1" required>
+						<input type="number" name="score2" placeholder="2" required>
+						<input type="number" name="score3" placeholder="3" required>
+						<input type="number" name="score4" placeholder="4" required>
+						<input type="number" name="score5" placeholder="5" required>
+						<input type="number" name="score6" placeholder="6" required>
+						<input type="number" name="score7" placeholder="7" required>
+						<input type="number" name="score8" placeholder="8" required>
+						<input type="number" name="score9" placeholder="9" required>
+						<input type="number" name="score10" placeholder="10" required>
+						<input type="number" name="score11" placeholder="11" required>
+						<input type="number" name="score12" placeholder="12" required>
+						<input type="number" name="score13" placeholder="13" required>
+						<input type="number" name="score14" placeholder="14" required>
+						<input type="number" name="score15" placeholder="15" required>
+						<input type="number" name="score16" placeholder="16" required>
+						<input type="number" name="score17" placeholder="17" required>
+						<input type="number" name="score18" placeholder="18" required>
+					</p>
 				</div>
 				<input type="submit" value="Post">
 			</form>
