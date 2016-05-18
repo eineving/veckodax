@@ -1,17 +1,17 @@
-CREATE TABLE Sex(
+CREATE TABLE veckodax.Sex(
 	sex VARCHAR(6) PRIMARY KEY
 );
 
-INSERT INTO sex VALUES('male');
-INSERT INTO sex VALUES('female');
+INSERT INTO Sex VALUES('male');
+INSERT INTO Sex VALUES('female');
 
-CREATE TABLE Club(
+CREATE TABLE veckodax.Club(
 	id INT AUTO_INCREMENT,
 	name VARCHAR(50) NOT NULL, 
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE Player(
+CREATE TABLE veckodax.Player(
 	golfID CHAR(9),
 	firstName VARCHAR(50) NOT NULL,
 	lastName VARCHAR(50) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE Player(
 	FOREIGN KEY (clubID) REFERENCES Club(id)
 );
 
-CREATE TABLE Course(
+CREATE TABLE veckodax.Course(
 	id INT AUTO_INCREMENT,
 	name VARCHAR(50),
 	clubID INT,
@@ -31,7 +31,7 @@ CREATE TABLE Course(
 	FOREIGN KEY (clubID) REFERENCES Club(id)
 );
 
-CREATE TABLE Tee(
+CREATE TABLE veckodax.Tee(
 	name VARCHAR(20),
 	courseID INT,
 	clubID INT, 
@@ -39,7 +39,7 @@ CREATE TABLE Tee(
 	FOREIGN KEY (courseID, clubID) REFERENCES Course(id, clubID)
 );
 
-CREATE TABLE TeeRating(
+CREATE TABLE veckodax.TeeRating(
 	teeName VARCHAR(20),
 	courseID INT,
 	clubID INT,
@@ -51,7 +51,7 @@ CREATE TABLE TeeRating(
 	FOREIGN KEY (sex) REFERENCES Sex(sex)
 );
 
-CREATE TABLE Round (
+CREATE TABLE veckodax.Round (
 	dateAndTime DATETIME,
 	hcp DOUBLE,
 	player VARCHAR(9),
@@ -66,7 +66,7 @@ CREATE TABLE Round (
 	FOREIGN KEY (courseID, clubID) REFERENCES Course(id, clubID)
 );
 
-CREATE TABLE Hole(
+CREATE TABLE veckodax.Hole(
 	number INT,
 	clubID INT,
 	courseID INT,
@@ -77,7 +77,7 @@ CREATE TABLE Hole(
 	CONSTRAINT 18holes CHECK ((number>0) AND (number<19) AND (hcp>0) AND (hcp<19))
 );
 
-CREATE TABLE Score(
+CREATE TABLE veckodax.Score(
 	number INT,
 	clubID INT,
 	courseID INT,
@@ -89,7 +89,7 @@ CREATE TABLE Score(
 	FOREIGN KEY (roundStart, player) REFERENCES Round(dateAndTime, player)
 );
 
-CREATE TABLE Distance(
+CREATE TABLE veckodax.Distance(
 	hole INT,
 	tee VARCHAR(20),
 	courseID INT,
@@ -101,14 +101,14 @@ CREATE TABLE Distance(
 );
 
 
-CREATE VIEW AllRounds AS SELECT roundStart,  firstname, lastname, round.hcp, round.teeName, 
-	- round(-round.hcp*(teerating.slope/113)+(teerating.cr-sum(hole.par)),0) AS SHCP,
-    sum(score) AS Brutto, sum(score)-round(-round.hcp*(teerating.slope/113)+(teerating.cr-sum(hole.par)),0) AS Netto
-FROM Score, teerating, round, player, Hole
-WHERE Score.roundStart = round.dateAndTime AND
-	round.teeName = teerating.teeName AND
-    player.sex = teerating.sex AND
-    player.golfid = round.player AND
-    player.golfid = Score.player AND
-    Score.number = hole.number
-GROUP BY concat(player.golfID, round.dateAndTime)
+CREATE VIEW veckodax.AllRounds AS SELECT roundStart,  firstname, lastname, Round.hcp, Round.teeName, 
+	- round(-Round.hcp*(TeeRating.slope/113)+(TeeRating.cr-sum(Hole.par)),0) AS SHCP,
+    sum(score) AS Brutto, sum(score)-round(-Round.hcp*(TeeRating.slope/113)+(TeeRating.cr-sum(Hole.par)),0) AS Netto
+FROM Score, TeeRating, Round, Player, Hole
+WHERE Score.roundStart = Round.dateAndTime AND
+	Round.teeName = TeeRating.teeName AND
+    Player.sex = TeeRating.sex AND
+    Player.golfid = Round.player AND
+    Player.golfid = Score.player AND
+    Score.number = Hole.number
+GROUP BY concat(Player.golfID, Round.dateAndTime)

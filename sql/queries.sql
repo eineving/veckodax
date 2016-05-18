@@ -2,8 +2,8 @@
 
 /*Brutto scores*/
 SELECT roundStart, firstName, lastname, SUM( score ) AS Brutto
-FROM Score, player
-WHERE player.golfID=Score.player
+FROM Score, Player
+WHERE Player.golfID=Score.player
 GROUP BY roundStart, player
 ORDER BY Brutto
 
