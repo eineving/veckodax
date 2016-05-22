@@ -1,5 +1,3 @@
-
-
 import com.google.gson.Gson;
 import dbEntities.Round;
 import org.joda.time.DateTime;
@@ -12,15 +10,17 @@ import static spark.Spark.*;
  * Created by Test on 2015-05-21.
  */
 public class Server {
-    final DateTime start = new DateTime(2015,05,18,00,00);
+    final DateTime start = new DateTime(2016,05,23,00,00);
     DBconnector db;
     Gson gson = new Gson();
     public Server(String dbURL, String dbUserName, String dbPassword){
         db= new DBconnector(dbURL, dbUserName, dbPassword);
 
         get("/hello", (request, response) -> "Hello world");
-        get("/allRounds", (request, response)-> gson.toJson(db.getPersonalBest()));
-
+        get("/allRounds", (request, response)->{
+                response.header("Access-Control-Allow-Origin", "*");
+                return gson.toJson(db.getPersonalBest());
+        });
         get("/allRounds/*", (request, response) ->{
             System.out.println(request.splat()[0]);
             int week = Integer.parseInt(request.splat()[0]);
@@ -29,7 +29,7 @@ public class Server {
             return gson.toJson(db.getPersonalBest(start.plus(Duration.standardDays((week - 1) * 7)),start.plus(Duration.standardDays((week)*7))));
         });
 
-        post("/newRound/", (request, response)->{
+        post("/addResult/", (request, response)->{
             System.out.println(request.body());
             Round round = gson.fromJson(request.body(), Round.class);
             db.createNewRound(round);

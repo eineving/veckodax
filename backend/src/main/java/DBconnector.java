@@ -24,7 +24,7 @@ public class DBconnector {
 
         try {
             System.out.println("Connecting database...");
-            connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection("jdbc:mysql://"+url+"/", username, password);
             System.out.println("Database connected!");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,7 +34,7 @@ public class DBconnector {
 
     public int getClubID(String clubName) {
         try {
-            ResultSet temp = connection.createStatement().executeQuery("SELECT id FROM Veckodax.Club WHERE name = '" + clubName + "';");
+            ResultSet temp = connection.createStatement().executeQuery("SELECT id FROM veckodax.Club WHERE name = '" + clubName + "';");
 
             if (temp.next()) {
                 System.out.println(temp.toString());
@@ -55,7 +55,7 @@ public class DBconnector {
     public List<PersonalBest> getPersonalBest(DateTime start, DateTime end) {
         List<PersonalBest> results = new LinkedList<>();
         String query = "SELECT golfID, firstname, lastname ,count(golfID) AS PlayedRounds, MIN(netto) AS Netto\n" +
-                "FROM Veckodax.allrounds\n" +
+                "FROM veckodax.AllRounds\n" +
                 "WHERE roundStart >= '" + start.toString().substring(0, 10) + "' AND\n" +
                 "    roundStart < '"+end.toString().substring(0,10) +"' " +
                 "GROUP BY golfID\n" +
@@ -76,11 +76,10 @@ public class DBconnector {
         int courseID = round.getCourseID();
         int clubID = round.getClubID();
 
-        //TODO Make into stringbuilder
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append("INSERT INTO Veckodax.Round VALUES('" +  round.getDate()+ " " + round.getTime() +  "', " + round.getHcp()+
+        queryBuilder.append("INSERT INTO veckodax.Round VALUES('" +  round.getDate()+ " " + round.getTime() +  "', " + round.getHcp()+
                 ", '"+ round.getGolfID() + "', '" + round.getMarkerGolfID() +"', "+ courseID + ", "+ clubID + ", '"+ round.getTeeName() + "');\n");
-        queryBuilder.append( "INSERT INTO Veckodax.Score VALUES");
+        queryBuilder.append( "INSERT INTO veckodax.Score VALUES");
 
         for(int i = 1; i < 19; i++){
             queryBuilder.append("("+i+", "+ courseID + ", " +clubID + ", '" +  round.getDate()+ " " + round.getTime() +  "', '" +

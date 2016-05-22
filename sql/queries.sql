@@ -11,14 +11,14 @@ ORDER BY Brutto
 
 
 /*HCP*/
-SELECT roundStart,  firstname, lastname, round.hcp, round.teeName, teerating.cr, teerating.slope, 
-	round(-round.hcp*(teerating.slope/113)+(teerating.cr-sum(hole.par)),0) AS SHCP, sum(hole.par) AS Par
-FROM Score, teerating, round, player, Hole
-WHERE Score.roundStart = round.dateAndTime AND
-	round.teeName = teerating.teeName AND
-    player.sex = teerating.sex AND
-    player.golfid = round.player AND
-    player.golfid = Score.player AND
-    Score.number = hole.number
-GROUP BY concat(player.golfID, round.dateAndTime);
+SELECT roundStart,  firstname, lastname, Round.hcp, Round.teeName, TeeRating.cr, TeeRating.slope, 
+	round(-Round.hcp*(TeeRating.slope/113)+(TeeRating.cr-sum(Hole.par)),0) AS SHCP, sum(Hole.par) AS Par
+FROM Score, TeeRating, Round, Player, Hole
+WHERE Score.roundStart = Round.dateAndTime AND
+	Round.teeName = TeeRating.teeName AND
+    Player.sex = TeeRating.sex AND
+    Player.golfid = Round.player AND
+    Player.golfid = Score.player AND
+    Score.number = Hole.number
+GROUP BY concat(Player.golfID, Round.dateAndTime);
 
