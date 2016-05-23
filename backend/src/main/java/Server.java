@@ -14,7 +14,7 @@ public class Server {
     DBconnector db;
     Gson gson = new Gson();
     public Server(String dbURL, String dbUserName, String dbPassword){
-        db= new DBconnector(dbURL, dbUserName, dbPassword);
+        db = new DBconnector(dbURL, dbUserName, dbPassword);
 
         get("/hello", (request, response) -> "Hello world");
         get("/allRounds", (request, response)->{
@@ -28,6 +28,9 @@ public class Server {
 
             return gson.toJson(db.getPersonalBest(start.plus(Duration.standardDays((week - 1) * 7)),start.plus(Duration.standardDays((week)*7))));
         });
+
+        //thisweek
+        //lastweek
 
         post("/addResult/", (request, response)->{
             System.out.println(request.body());

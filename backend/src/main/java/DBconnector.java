@@ -11,9 +11,17 @@ import java.util.Date;
  */
 public class DBconnector {
     Connection connection;
+    String url, username, password;
 
     public DBconnector(String url, String username, String password) {
+        this.url = url;
+        this.username = username;
+        this.password = password;
+        
+        initateServerConnection();
+    }
 
+    public void initateServerConnection(){
         try {
             System.out.println("Loading driver...");
             Class.forName("com.mysql.jdbc.Driver");
