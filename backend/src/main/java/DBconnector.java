@@ -69,7 +69,7 @@ public class DBconnector {
                 "GROUP BY golfID\n" +
                 "ORDER BY Netto;";
         try {
-            ResultSet response = connection.createStatement().executeQuery(query);
+            ResultSet response = sendQuerry(query);
             while(response.next()){
                 results.add(new PersonalBest(response.getString("firstname"), response.getString("lastname"), response.getString("golfID"),
                         response.getInt("PlayedRounds"), response.getInt("Netto")));
@@ -101,6 +101,30 @@ public class DBconnector {
         }
 
         System.out.println(queryBuilder.toString());
+
+        try {
+            ResultSet response = sendQuerry(queryBuilder.toString());
+            System.out.print(response);
+            return response.wasNull();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
+    }
+
+    /**
+     * Send query and tries to reestablish connection if lost
+     */
+    public ResultSet sendQuerry(String query) throws SQLException {
+        try{
+            return connection.createStatement().executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            //Restart connection and try again
+            initateServerConnection();
+            return connection.createStatement().executeQuery(query);
+        }
+
     }
 }

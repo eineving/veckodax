@@ -1,12 +1,13 @@
 package dbEntities;
 
 public class Round {
-    int[] scores;
+
     String golfID, markerGolfID;
     String date, time;
     String teeName;
     int clubID, courseID;
     double hcp;
+    int[] scores;
 
     public int[] getScores() {
         return scores;
@@ -49,8 +50,8 @@ public class Round {
      * @return golfID without '-'
      */
     private String golfIDparser(String id){
-        if(golfID.charAt(6) == '='){
-            return golfID.substring(0,5)+golfID.substring(7,9);
+        if(golfID.charAt(6) == '-'){
+            return golfID.substring(0,6)+golfID.substring(7,10);
         }
         return id;
     }

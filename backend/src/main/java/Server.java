@@ -32,7 +32,7 @@ public class Server {
         //thisweek
         //lastweek
 
-        post("/addResult/", (request, response)->{
+        post("/addRound", (request, response)->{
             System.out.println(request.body());
             Round round = gson.fromJson(request.body(), Round.class);
             db.createNewRound(round);
