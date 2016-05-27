@@ -2,7 +2,7 @@ package dbEntities;
 
 public class Round {
 
-    String golfID, markerGolfID;
+    String golfID, markerID;
     String date, time;
     String teeName;
     int clubID, courseID;
@@ -18,8 +18,8 @@ public class Round {
         return golfIDparser(golfID);
     }
 
-    public String getMarkerGolfID() {
-        return golfIDparser(markerGolfID);
+    public String getMarkerID() {
+        return golfIDparser(markerID);
     }
 
     public String getDate() {
@@ -50,8 +50,8 @@ public class Round {
      * @return golfID without '-'
      */
     private String golfIDparser(String id){
-        if(golfID.charAt(6) == '-'){
-            return golfID.substring(0,6)+golfID.substring(7,10);
+        if(id.charAt(6) == '-'){
+            return id.substring(0,6)+id.substring(7,10);
         }
         return id;
     }
