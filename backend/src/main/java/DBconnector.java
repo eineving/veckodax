@@ -65,9 +65,10 @@ public class DBconnector {
         String query = "SELECT golfID, firstname, lastname ,count(golfID) AS PlayedRounds, MIN(netto) AS Netto\n" +
                 "FROM veckodax.AllRounds\n" +
                 "WHERE roundStart >= '" + start.toString().substring(0, 10) + "' AND\n" +
-                "    roundStart < '"+end.toString().substring(0,10) +"' " +
+                "    roundStart <= '"+end.toString().substring(0,10) +"' " +
                 "GROUP BY golfID\n" +
                 "ORDER BY Netto;";
+        System.out.println(query);
         try {
             ResultSet response = sendQuerry(query);
             while(response.next()){
