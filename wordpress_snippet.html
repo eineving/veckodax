@@ -24,41 +24,68 @@ table tr:nth-child(even) {
 
 <body>
 
-<h1>Results</h1>
-<div id="id01"></div>
+<h1>Results this week</h1>
+<div id="thisWeek"></div>
+
+<h1>Results last week</h1>
+<div id="lastWeek"></div>
+
+<h1>Played weeks</h1>
+<div id="weeksPlayed"></div>
+
 
 <script>
-var xmlhttp = new XMLHttpRequest();
-var url = "http://46.101.167.101:4567/allRounds";
+var thisWeek = new XMLHttpRequest();
+var lastWeek = new XMLHttpRequest();
+var rounds = new XMLHttpRequest();
+var url = "http://46.101.167.101:4567";
 
-xmlhttp.onreadystatechange=function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        myFunction(xmlhttp.responseText);
+thisWeek.onreadystatechange=function() {
+    if (thisWeek.readyState == 4 && thisWeek.status == 200) {
+        resultFunction(thisWeek.responseText, "this");
     }
 }
-xmlhttp.open("GET", url, true);
-xmlhttp.send();
+lastWeek.onreadystatechange=function() {
+    if (lastWeek.readyState == 4 && lastWeek.status == 200) {
+        resultFunction(lastWeek.responseText, "last");
+    }
+}
 
-function myFunction(response) {
+rounds.onreadystatechange=function() {
+    if (rounds.readyState == 4 && rounds.status == 200) {
+        roundsFunction(rounds.responseText);
+    }
+}
+
+thisWeek.open("GET", url + "/thisWeek", true);
+thisWeek.send();
+
+lastWeek.open("GET", url + "/lastWeek", true);
+lastWeek.send();
+
+rounds.open("GET", url + "/rounds", true);
+rounds.send();
+
+function resultFunction(response, week) {
     var arr = JSON.parse(response);
     var i;
     var out = "<table>";
     out += "<tr><td>" + 
-        "First Name" +
+        //"First Name" +
+        //"</td><td>" +
+        "<b>Name</b>" +
         "</td><td>" +
-       "Last Name" +
-        "</td><td>" +
-        "Golf-ID" +
+        "<b>Golf-ID</b>" +
         "</td><td>"+
-        "Played Rounds"+
+        "<b>Played Rounds</b>"+
         "</td><td>"+
-        "Best Result Netto" +
+        "<b>Best Result Netto</b>" +
         "</td></tr>";
 
     for(i = 0; i < arr.length; i++) {
         out += "<tr><td>" + 
-        arr[i].firstName +
-        "</td><td>" +
+        arr[i].firstName + " " +
+        //"</td><td>" +
         arr[i].lastName +
         "</td><td>" +
         arr[i].golfID +
@@ -69,8 +96,45 @@ function myFunction(response) {
         "</td></tr>";
     }
     out += "</table>";
-    document.getElementById("id01").innerHTML = out;
+
+    if(week == "this"){
+        document.getElementById("thisWeek").innerHTML = out;
+    }
+    if(week == "last"){
+        document.getElementById("lastWeek").innerHTML = out;
+    }   
 }
+
+function roundsFunction(response, week) {
+    var arr = JSON.parse(response);
+    var i;
+    var out = "<table>";
+    out += "<tr><td>" + 
+        //"First Name" +
+        //"</td><td>" +
+        "<b>Name</b>" +
+        "</td><td>" +
+        "<b>Golf-ID</b>" +
+        "</td><td>"+
+        "<b>Played Rounds</b>"+
+        "</td></tr>";
+
+    for(i = 0; i < arr.length; i++) {
+        out += "<tr><td>" + 
+        arr[i].firstName + " " +
+        //"</td><td>" +
+        arr[i].lastName +
+        "</td><td>" +
+        arr[i].golfID +
+        "</td><td>"+
+        arr[i].playedRounds +
+        "</td></tr>";
+    }
+    out += "</table>";
+    document.getElementById("weeksPlayed").innerHTML = out;
+       
+}
+
 </script>
 
 </body>

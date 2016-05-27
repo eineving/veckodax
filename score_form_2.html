@@ -4,92 +4,92 @@
 <form action="#" method="post">
     <div>
         <label for="golfID">Golf-ID</label>
-        <input type="text" name="golfID" id="golfID" />
+        <input type="text" name="golfID" id="golfID" required />
     </div>
     <div>
         <label for="markerGolfID">Marker's Golf-ID</label>
-        <input type="text" name="markerGolfID" id="markerGolfID" />
+        <input type="text" name="markerGolfID" id="markerGolfID" required />
     </div>
     <div>
         <label for="date">Date</label>
-        <input type="date" name="date" id="date" />
+        <input type="date" name="date" id="date" required/>
     </div>
     <div>
         <label for="time">Tee time</label>
-        <input type="time" name="time" id="time" />
+        <input type="time" name="time" id="time" required/>
     </div>
     <div>
         <label for="teeName">Tee name</label>
-        <input type="text" name="teeName" id="teeName" value="Vit" />
+        <input type="text" name="teeName" id="teeName" value="Vit" required/>
     </div>
     <div>
         <label for="clubID">Club ID</label>
-        <input type="integer" name="clubID" id="clubID" value="1" />
+        <input type="integer" name="clubID" id="clubID" value="1" required/>
     </div>
     <div>
         <label for="courseID">Course ID</label>
-        <input type="integer" name="courseID" id="courseID" value="1" />
+        <input type="integer" name="courseID" id="courseID" value="1" required/>
     </div>
     <div>
         <label for="hcp">HCP</label>
-        <input type="number" name="hcp" id="hcp" value="-4.5" />
+        <input type="number" name="hcp" id="hcp" value="-4.5" step="0.1" required/>
     </div>
     <div>
     	<label for="scores[]">Scores</label>
     	<br>
     	<a> 1 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 2 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 3 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 4 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 5 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 6 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 7 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 8 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 9 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 10 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 11 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 12 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 13 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 14 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 15 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 16 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 17 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> 18 </a>
-    	<input type="integer" name="scores" />
+    	<input type="integer" name="scores" required/>
     	<br>
     	<a> Sum </a>
     	<a name = "sum" ??/>
@@ -122,14 +122,12 @@ $('form').submit(function (e) {
     e.preventDefault();
     var json = $(this).serializeFormJSON();
     console.log(json);
-    //$.post( "http://46.101.167.101:4567/addRound", json, null, "json" );
-//});
+    
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "POST", "http://46.101.167.101:4567/addRound", false ); // false for synchronous request
     xmlHttp.send( JSON.stringify(json));
     return xmlHttp.responseText;
-    
-
+   
 });
 
 </script>
